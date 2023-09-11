@@ -19,6 +19,16 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Product createProduct(Product product){
+        return productRepository.save(product);
+    }
+
+
+    public List<Product> createProducts(List<Product> products){
+        return productRepository.saveAll(products);
+    }
+
+
     public Optional<Product> findProductById(Long id){
         return productRepository.findById(id);
     }

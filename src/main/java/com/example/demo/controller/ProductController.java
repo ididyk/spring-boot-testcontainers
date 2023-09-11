@@ -3,23 +3,29 @@ package com.example.demo.controller;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
 
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody ProductDTO productDTO){
-        return ResponseEntity.ok(productService.createProduct(productDTO));
+        return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<Product>> create(@RequestBody List<Product> products){
+        return new ResponseEntity<>(productService.createProducts(products), HttpStatus.CREATED);
     }
 
     @GetMapping
